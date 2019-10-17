@@ -1,46 +1,51 @@
-user1={
-    email:"email@email.com",
-    password:"123",
-    loggedIn:false
-}
+user1 = {
+  email: "email@email.com",
+  password: "123",
+  loggedIn: false
+};
 
-users = {}
+users = {};
 
-function signUp(user){
-    if(!(user in users)){
-        users[user.email]={
-            password:user.password,
-            loggedIn:false
-        }
-    }
-    return user
-}
+var user = (function() {
+  return {
+    signUp: function(u) {
+      if (!(u in users)) {
+        users[u.email] = {
+          password: u.password,
+          loggedIn: false
+        };
+      }
+      return u;
+    },
 
-function signIn(email, password){
-    if(email in users && users[email].password === password){
+    signIn: function(email, password) {
+      if (email in users && users[email].password === password) {
         users[email].loggedIn = true;
-        return {email:email, password:password, loggedIn:true}
+        return { email: email, password: password, loggedIn: true };
+      }
+      console.log("Incorrect email or password");
+      return { email: "", password: "", loggedIn: false };
+    },
+
+    signOut: function(u) {
+      u.loggedIn = false;
+      users[u.email].loggedIn = false;
+      return u;
+    },
+
+    changePassword: function(u, password, passwordConfirmation) {
+      if (password === passwordConfirmation) {
+        u.password = password;
+        users[u.email].password = password;
+      }
+      return u;
     }
-    console.log("Incorrect email or password")
-    return{email:"",password:"",loggedIn:false}
-}
+  };
+})();
 
-function signOut(user){
-    user.loggedIn=false
-    users[user.email].loggedIn=false
-    return user
-}
-
-function changePassword(user, password, passwordConfirmation){
-    if(password === passwordConfirmation){
-        user.password = password
-        users[user.email].password=password
-    }
-    return user
-}
-
-signUp(user1)
-user1 = signIn(user1.email, user1.password)
+user.signUp(user1);
+user1 = user.signIn(user1.email, user1.password);
 //user1 = signOut(user1)
-changePassword(user1, 789, 789)
-console.log(users[user1.email])
+user.changePassword(user1, 789, 789);
+//user1 = user.signOut(user1)
+console.log(users[user1.email]);
