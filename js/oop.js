@@ -31,14 +31,3 @@ class User {
     return this;
   }
 }
-
-user = new User("email@email.com", 123, 123);
-
-console.log(
-  user
-    .save()
-    .authenticate()
-    .deauthenticate()
-);
-
-console.log(tempDb);

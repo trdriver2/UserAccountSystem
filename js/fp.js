@@ -42,10 +42,3 @@ var user = (function() {
     }
   };
 })();
-
-user.signUp(user1);
-user1 = user.signIn(user1.email, user1.password);
-//user1 = signOut(user1)
-user.changePassword(user1, 789, 789);
-//user1 = user.signOut(user1)
-console.log(users[user1.email]);
